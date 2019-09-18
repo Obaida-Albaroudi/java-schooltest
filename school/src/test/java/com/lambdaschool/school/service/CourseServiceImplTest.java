@@ -31,31 +31,31 @@ public class CourseServiceImplTest
     private Instructor instructor;
 
     @Before
-    public void AsetUp() throws Exception
+    public void setUp() throws Exception
     {
         MockitoAnnotations.initMocks(this);
     }
 
     @After
-    public void BtearDown() throws Exception
+    public void tearDown() throws Exception
     {
     }
 
     @Test
-    public void CfindAll()
+    public void findAll()
     {
-        assertEquals(3, courseService.findAll().size());
+        assertEquals(5, courseService.findAll().size());
     }
 
     @Test
-    public void DfindCourseById()
+    public void findCourseById()
     {
-        assertEquals("Science", courseService.findCourseById(2).getCoursename());
+        assertEquals("JavaScript", courseService.findCourseById(2).getCoursename());
     }
 
 
     @Test
-    public void EAupdate()
+    public void update()
     {
         Instructor thisInstructor = new Instructor();
         Course r1 = new Course(null, thisInstructor);
@@ -67,7 +67,7 @@ public class CourseServiceImplTest
     }
 
     @Test (expected = EntityNotFoundException.class)
-    public void FdeleteNotFound()
+    public void deleteNotFound()
     {
         courseService.delete(3);
         assertEquals(2, courseService.findAll().size());
@@ -75,15 +75,15 @@ public class CourseServiceImplTest
 
 
     @Test
-    public void GdeleteFound()
+    public void deleteFound()
     {
         courseService.delete(3);
-        assertEquals(2, courseService.findAll().size());
+        assertEquals(5, courseService.findAll().size());
     }
 
 
     @Test
-    public void Hsave()
+    public void save()
     {
         Instructor thisInstructor = new Instructor("Aws");
         String rest3Name = "Java 10000";

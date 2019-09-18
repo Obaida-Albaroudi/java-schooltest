@@ -46,11 +46,11 @@ public class CourseControllerIntegrationTest
     {
         Instructor thisInstructor = new Instructor();
         String rest3Name = "Java 101";
-        Course r3 = new Course(rest3Name, thisInstructor);
-        r3.getStudents().add(new Student("Obaida"));
+        Course r5 = new Course(rest3Name, thisInstructor);
+        r5.getStudents().add(new Student("Obaida"));
 
         ObjectMapper mapper = new ObjectMapper();
-        String stringR3 = mapper.writeValueAsString(r3);
+        String stringR3 = mapper.writeValueAsString(r5);
 
         given().contentType("application/json").body(stringR3).when().post("/courses/course/add").then().statusCode(201);
     }
@@ -58,11 +58,11 @@ public class CourseControllerIntegrationTest
 
     //    GET /restaurants/restaurant/{restaurantId}
     @Test
-    public void givenFoundRestaurantId() throws Exception
+    public void givenFoundCourseId() throws Exception
     {
-        long aRestaurant = 10L;
+        long aCourse = 1;
 
-        given().when().get("/restaurants/restaurant/" + aRestaurant).then().statusCode(200).and().body(containsString("Bird"));
+        given().when().get("/courses/courses/" + aCourse).then().statusCode(200).and().body(containsString("Java 101"));
     }
 
 
