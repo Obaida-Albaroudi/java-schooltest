@@ -47,9 +47,12 @@ public class CourseServiceImpl implements CourseService
     }
 
     @Override
-    public Course findCourseById(long id) {
-        return null;
+    public Course findCourseById(long id) throws EntityNotFoundException
+    {
+        return courserepos.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
     }
+
 
     @Transactional
     @Override
@@ -59,11 +62,6 @@ public class CourseServiceImpl implements CourseService
 
         newCourse.setCoursename(course.getCoursename());
         newCourse.setInstructor(course.getInstructor());
-
-        for (Student m : course.getStudents())
-        {
-            newCourse.getStudents().add(new Student(m.getStudname()));
-        }
 
         return courserepos.save(newCourse);
     }
@@ -82,14 +80,6 @@ public class CourseServiceImpl implements CourseService
         if (course.getInstructor() != null)
         {
             currentCourse.setInstructor(course.getInstructor());
-        }
-
-        if (course.getStudents().size() > 0)
-        {
-            for (Student m : course.getStudents())
-            {
-                currentCourse.getStudents().add(new Student(m.getStudname()));
-            }
         }
 
         return courserepos.save(currentCourse);

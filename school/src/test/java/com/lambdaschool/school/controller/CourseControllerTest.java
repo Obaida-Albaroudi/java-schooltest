@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = CourseController.class, secure = false)
-public class RestaurantControllerTest
+public class CourseControllerTest
 {
 
     @Autowired
@@ -48,58 +48,34 @@ public class RestaurantControllerTest
     {
         courseList = new ArrayList<>();
 
-        Instructor InstType1 = new Instructor("John");
-        InstType1.setInstructid(1);
-        Instructor InstType2 = new Instructor("Jack");
-        InstType2.setInstructid(2);
-        Instructor InstType3 = new Instructor("Joe");
-        InstType3.setInstructid(3);
+        Instructor Sally = new Instructor("'Sally'");
+        Sally.setInstructid(1);
+        Instructor Lucy = new Instructor("Lucy");
+        Lucy.setInstructid(2);
+        Instructor Charlie = new Instructor("Charlie");
+        Charlie.setInstructid(3);
 
 
         // Restaurant String name, String address, String city, String state, String telephone
-        String rest1Name = "Java 101";
-        Course r1 = new Course(rest1Name);
-        r1.setCourseid(1);
 
-        r1.setInstructor(InstType1);
-        r1.getStudents().add(new Student("Obaida"));
-        r1.getStudents().get(0).setStudid(20);
-        r1.getStudents().add(new Student("Brandon"));
-        r1.getStudents().get(1).setStudid(21);
-        r1.getStudents().add(new Student("Isaiah"));
-        r1.getStudents().get(2).setStudid(22);
-        r1.getStudents().add(new Student("Adetunji"));
-        r1.getStudents().get(3).setStudid(23);
-        r1.getStudents().add(new Student("Timoth"));
-        r1.getStudents().get(4).setStudid(24);
-
-        courseList.add(r1);
-
-        String rest2Name = "Java 102";
-        Course r2 = new Course(rest2Name);
-        r2.setCourseid(2);
-
-        r2.setInstructor(InstType2);
-        r2.getStudents().add(new Student("Samantha"));
-        r2.getStudents().get(5).setStudid(25);
-        r2.getStudents().add(new Student("Jennifer"));
-        r2.getStudents().get(6).setStudid(26);
-
-        courseList.add(r2);
-
-        String rest3Name = "Java 103";
-        Course r3 = new Course(rest3Name);
-        r3.setCourseid(3);
-
-        r3.setInstructor(InstType3);
-        r3.getStudents().add(new Student("Haley"));
-        r3.getStudents().get(7).setStudid(27);
-        r3.getStudents().add(new Student("Bailey"));
-        r3.getStudents().get(8).setStudid(28);
-        r3.getStudents().add(new Student("Kaley"));
-        r3.getStudents().get(9).setStudid(29);
-
-        courseList.add(r3);
+        Course DataScience = new Course("Data Science", Sally);
+        DataScience.setCourseid(1);
+        courseList.add(DataScience);
+        Course JavaScript = new Course("JavaScript", Sally);
+        JavaScript.setCourseid(2);
+        courseList.add(JavaScript);
+        Course NodeJs = new Course("Node.js", Sally);
+        NodeJs.setCourseid(3);
+        courseList.add(NodeJs);
+        Course JavaBackEnd = new Course("Java Back End", Lucy);
+        JavaBackEnd.setCourseid(4);
+        courseList.add(JavaBackEnd);
+        Course MobileIos = new Course("Mobile IOS", Lucy);
+        MobileIos.setCourseid(5);
+        courseList.add(MobileIos);
+        Course MobileAndroid = new Course("Mobile Android", Charlie);
+        MobileAndroid.setCourseid(6);
+        courseList.add(MobileAndroid);
 
     }
 
@@ -130,16 +106,16 @@ public class RestaurantControllerTest
     @Test
     public void getCourseByIdFound() throws Exception
     {
-        String apiUrl = "/courses/courses/3";
+        String apiUrl = "/courses/courses/1";
 
-        Mockito.when(courseService.findCourseById(3)).thenReturn(courseList.get(3));
+        Mockito.when(courseService.findCourseById(1)).thenReturn(courseList.get(0));
 
         RequestBuilder rb = MockMvcRequestBuilders.get(apiUrl).accept(MediaType.APPLICATION_JSON);
         MvcResult r = mockMvc.perform(rb).andReturn(); // this could throw an exception
         String tr = r.getResponse().getContentAsString();
 
         ObjectMapper mapper = new ObjectMapper();
-        String er = mapper.writeValueAsString(courseList.get(2));
+        String er = mapper.writeValueAsString(courseList.get(0));
 
         assertEquals("Rest API Returns List", er, tr);
     }
@@ -165,7 +141,7 @@ public class RestaurantControllerTest
     @Test
     public void addNewCourse() throws Exception
     {
-        String apiUrl = "//courses/course/add";
+        String apiUrl = "/courses/course/add";
 
         // build a course
         Instructor thisInstructor = new Instructor("Sally");

@@ -44,25 +44,27 @@ public class CourseControllerIntegrationTest
     @Test
     public void givenPostACourse() throws Exception
     {
-        Instructor thisInstructor = new Instructor();
-        String rest3Name = "Java 101";
-        Course r5 = new Course(rest3Name, thisInstructor);
-        r5.getStudents().add(new Student("Obaida"));
+
+
+        Instructor Charlie = new Instructor("Charlie");
+        Charlie.setInstructid(3);
+        Course MobileAndroid = new Course("Mobile Android", Charlie);
+        MobileAndroid.setCourseid(6);
 
         ObjectMapper mapper = new ObjectMapper();
-        String stringR3 = mapper.writeValueAsString(r5);
+        String stringR3 = mapper.writeValueAsString(MobileAndroid);
 
         given().contentType("application/json").body(stringR3).when().post("/courses/course/add").then().statusCode(201);
     }
 
 
-    //    GET /restaurants/restaurant/{restaurantId}
+    //    GET /courses/courses/{restaurantId}
     @Test
     public void givenFoundCourseId() throws Exception
     {
-        long aCourse = 1;
+        long aCourse = 1L;
 
-        given().when().get("/courses/courses/" + aCourse).then().statusCode(200).and().body(containsString("Java 101"));
+        given().when().get("/courses/courses/" + aCourse).then().statusCode(200).and().body(containsString("Data Science"));
     }
 
 

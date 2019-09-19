@@ -28,7 +28,6 @@ public class CourseServiceImplTest
 {
     @Autowired
     private CourseService courseService;
-    private Instructor instructor;
 
     @Before
     public void setUp() throws Exception
@@ -47,23 +46,25 @@ public class CourseServiceImplTest
         assertEquals(5, courseService.findAll().size());
     }
 
+
     @Test
     public void findCourseById()
     {
-        assertEquals("JavaScript", courseService.findCourseById(2).getCoursename());
+        assertEquals("Data Science", courseService.findCourseById(1).getCoursename());
     }
 
 
     @Test
     public void update()
     {
-        Instructor thisInstructor = new Instructor();
-        Course r1 = new Course(null, thisInstructor);
-        r1.setCourseid(10);
+        Instructor Charlie = new Instructor("Charlie");
+        Charlie.setInstructid(3);
+        Course MobileAndroid = new Course("Android", Charlie);
+        MobileAndroid.setCourseid(6);
 
-        Course updatedR1 = courseService.update(r1, 10);
+        Course updatedMobileAndroid = courseService.update(MobileAndroid, 6);
 
-        assertEquals("ZZ", updatedR1.getClass());
+        assertEquals("Android", updatedMobileAndroid.getCoursename());
     }
 
     @Test (expected = EntityNotFoundException.class)
@@ -85,13 +86,13 @@ public class CourseServiceImplTest
     @Test
     public void save()
     {
-        Instructor thisInstructor = new Instructor("Aws");
-        String rest3Name = "Java 10000";
-        Course r5 = new Course( rest3Name,
-                thisInstructor);
-        r5.getStudents().add(new Student("John"));
+        Instructor Lucy = new Instructor("Lucy");
+        Lucy.setInstructid(2);
+        Course JavaBackEnd = new Course("Java Back End", Lucy);
+        JavaBackEnd.setCourseid(4);
 
-        Course addCourse = courseService.save(r5);
+
+        Course addCourse = courseService.save(JavaBackEnd);
 
         assertNotNull(addCourse);
 
